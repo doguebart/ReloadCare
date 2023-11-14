@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Input, ErrorMessage } from "./styles";
 
 const InputComponent = (props) => {
@@ -12,6 +12,16 @@ const InputComponent = (props) => {
     errorMessage,
   } = props;
 
+  const [isFocused, setIsFocused] = useState(false);
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
+
   return (
     <Container>
       <Input
@@ -22,6 +32,15 @@ const InputComponent = (props) => {
         isError={!!errorMessage}
         placeholder={placeholder}
         secureTextEntry={secureTextEntry}
+        style={{
+          borderBottomColor: errorMessage
+            ? "red"
+            : isFocused
+            ? "#66b567"
+            : "#cdcdcd",
+        }}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
       />
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </Container>

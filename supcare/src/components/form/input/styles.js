@@ -8,9 +8,10 @@ export const Container = styled.View`
 
 export const Input = styled.TextInput`
   width: 100%;
-  border: 1px;
-  padding: 18px;
-  border-radius: 4px;
+  color: #999;
+  border-bottom-width: 2px;
+  border-bottom-color: #eaeaea;
+  padding: 10px 0;
 `;
 
 export const ErrorMessage = styled.Text`
