@@ -23,32 +23,27 @@ const Register = () => {
   };
 
   const validateForm = () => {
-    let formIsValid = true;
     const newErrors = {};
 
-    if (!formData.nome) {
+    if (!formData.nome.trim()) {
       newErrors.nome = "Nome é obrigatório";
-      formIsValid = false;
     }
 
-    if (!formData.idade) {
+    if (!formData.idade.trim()) {
       newErrors.idade = "Idade é obrigatória";
-      formIsValid = false;
     }
 
-    if (!formData.email) {
+    if (!formData.email.trim()) {
       newErrors.email = "E-mail é obrigatório";
-      formIsValid = false;
     } else {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(formData.email)) {
         newErrors.email = "E-mail inválido";
-        formIsValid = false;
       }
     }
 
     setErrors(newErrors);
-    return formIsValid;
+    return Object.keys(newErrors).length === 0;
   };
 
   const newPassword = () => {

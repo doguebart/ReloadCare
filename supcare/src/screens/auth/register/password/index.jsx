@@ -24,6 +24,7 @@ const Password = () => {
 
   const handleInputChange = (name, value) => {
     setPasswordData({ ...passwordData, [name]: value });
+    setErrors({ ...errors, [name]: "" });
   };
 
   const goBack = () => {
@@ -31,24 +32,20 @@ const Password = () => {
   };
 
   const validateForm = () => {
-    let formIsValid = true;
     const newErrors = {};
 
-    if (!passwordData.senha) {
+    if (!passwordData.senha.trim()) {
       newErrors.senha = "Senha é obrigatória";
-      formIsValid = false;
     }
 
-    if (!passwordData.cf_senha) {
+    if (!passwordData.cf_senha.trim()) {
       newErrors.cf_senha = "Confirmação de senha é obrigatória";
-      formIsValid = false;
     } else if (passwordData.senha !== passwordData.cf_senha) {
       newErrors.cf_senha = "As senhas não coincidem";
-      formIsValid = false;
     }
 
     setErrors(newErrors);
-    return formIsValid;
+    return Object.keys(newErrors).length === 0;
   };
 
   const continueToNextPage = () => {
@@ -73,6 +70,7 @@ const Password = () => {
             <InputComponent
               type="password"
               name="senha"
+              secureTextEntry={true}
               onChangeText={(value) => handleInputChange("senha", value)}
               placeholder="Insira uma senha forte"
               errorMessage={errors.senha}
@@ -83,6 +81,7 @@ const Password = () => {
             <InputComponent
               type="password"
               name="cf_senha"
+              secureTextEntry={true}
               onChangeText={(value) => handleInputChange("cf_senha", value)}
               placeholder="As senhas devem ser iguais"
               errorMessage={errors.cf_senha}

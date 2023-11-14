@@ -22,7 +22,7 @@ export const Title = styled.Text`
 export const LinkContainer = styled.TouchableOpacity`
   max-width: 100%;
   max-height: 100%;
-  margin: 40px 20px;
+  margin: 20px;
   display: flex;
   flex-direction: row;
   align-items: center;
