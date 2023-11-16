@@ -4,8 +4,16 @@ export const Container = styled.View`
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
   background-color: #fff;
+`;
+
+export const FormContainer = styled.View`
+  width: 100%;
+  max-height: 100%;
+  display: flex;
+  justify-content: center;
 `;
 
 export const Title = styled.Text`
@@ -22,7 +30,8 @@ export const KeyboardAvoidingView = styled.KeyboardAvoidingView``;
 export const LinkContainer = styled.TouchableOpacity`
   max-width: 100%;
   max-height: 100%;
-  margin: 20px;
+  margin-left: 20px;
+  margin-bottom: 60px;
   display: flex;
   flex-direction: row;
   align-items: center;

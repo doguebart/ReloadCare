@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   Container,
+  FormContainer,
   Form,
   ScrollViewContainer,
   InputContainer,
@@ -63,42 +64,44 @@ const Password = () => {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <LinkContainer onPress={goBack}>
-          <Icon name="arrow-left" size={24} color="#66b567" />
-          <Text style={{ fontSize: 16, fontWeight: "400", marginLeft: 2 }}>
+          <Icon name="arrow-left" size={30} color="#66b567" />
+          <Text style={{ fontSize: 20, fontWeight: "400", marginLeft: 2 }}>
             Voltar
           </Text>
         </LinkContainer>
 
-        <Form>
-          <Title>CRIE UMA NOVA SENHA</Title>
-          <ScrollViewContainer>
-            <InputContainer>
-              <Label>Nova senha</Label>
-              <InputComponent
-                type="password"
-                name="senha"
-                secureTextEntry={true}
-                onChangeText={(value) => handleInputChange("senha", value)}
-                placeholder="Insira uma senha forte"
-                errorMessage={errors.senha}
-              />
-            </InputContainer>
-            <InputContainer>
-              <Label>Confirme sua senha</Label>
-              <InputComponent
-                type="password"
-                name="cf_senha"
-                secureTextEntry={true}
-                onChangeText={(value) => handleInputChange("cf_senha", value)}
-                placeholder="As senhas devem ser iguais"
-                errorMessage={errors.cf_senha}
-              />
-            </InputContainer>
-          </ScrollViewContainer>
-          <ButtonComponent onPress={continueToNextPage}>
-            Criar Conta
-          </ButtonComponent>
-        </Form>
+        <FormContainer>
+          <Form>
+            <Title>CRIE UMA NOVA SENHA</Title>
+            <ScrollViewContainer>
+              <InputContainer>
+                <Label>Nova senha</Label>
+                <InputComponent
+                  type="password"
+                  name="senha"
+                  secureTextEntry={true}
+                  onChangeText={(value) => handleInputChange("senha", value)}
+                  placeholder="Insira uma senha forte"
+                  errorMessage={errors.senha}
+                />
+              </InputContainer>
+              <InputContainer>
+                <Label>Confirme sua senha</Label>
+                <InputComponent
+                  type="password"
+                  name="cf_senha"
+                  secureTextEntry={true}
+                  onChangeText={(value) => handleInputChange("cf_senha", value)}
+                  placeholder="As senhas devem ser iguais"
+                  errorMessage={errors.cf_senha}
+                />
+              </InputContainer>
+            </ScrollViewContainer>
+            <ButtonComponent onPress={continueToNextPage}>
+              Criar Conta
+            </ButtonComponent>
+          </Form>
+        </FormContainer>
       </KeyboardAvoidingView>
     </Container>
   );
