@@ -9,6 +9,8 @@ export const Container = styled.View`
   background-color: #fff;
 `;
 
+export const KeyboardAvoidingView = styled.KeyboardAvoidingView``;
+
 export const Title = styled.Text`
   width: 60%;
   margin-left: 20px;

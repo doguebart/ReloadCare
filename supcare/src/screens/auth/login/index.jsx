@@ -5,6 +5,7 @@ import {
   ScrollViewContainer,
   InputContainer,
   Text,
+  KeyboardAvoidingView,
   Title,
 } from "./styles";
 import { useNavigation } from "@react-navigation/native";
@@ -58,36 +59,43 @@ const Register = () => {
 
   return (
     <Container>
-      <Title>ENTRAR</Title>
-      <Form>
-        <ScrollViewContainer>
-          <InputContainer>
-            <Label>E-mail</Label>
-            <InputComponent
-              type="email"
-              name="email"
-              onChangeText={(value) => handleInputChange("email", value)}
-              placeholder="Insira seu nome e-mail"
-              errorMessage={errors.email}
-            />
-          </InputContainer>
-          <InputContainer>
-            <Label>Senha</Label>
-            <InputComponent
-              type="password"
-              name="senha"
-              secureTextEntry={true}
-              onChangeText={(value) => handleInputChange("senha", value)}
-              placeholder="Insira sua senha"
-              errorMessage={errors.senha}
-            />
-          </InputContainer>
-        </ScrollViewContainer>
-        <ButtonComponent onPress={handleLogin}>Entrar</ButtonComponent>
-        <LinkComponent style={{ textAlign: "center" }} onPress={goToRegister}>
-          Ainda não tem uma conta? <Text>Criar</Text>
-        </LinkComponent>
-      </Form>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <Title>ENTRAR</Title>
+        <Form>
+          <ScrollViewContainer>
+            <InputContainer>
+              <Label>E-mail</Label>
+              <InputComponent
+                type="email"
+                name="email"
+                onChangeText={(value) => handleInputChange("email", value)}
+                placeholder="Insira seu e-mail"
+                errorMessage={errors.email}
+              />
+            </InputContainer>
+            <InputContainer>
+              <Label>Senha</Label>
+              <InputComponent
+                type="password"
+                name="senha"
+                secureTextEntry={true}
+                onChangeText={(value) => handleInputChange("senha", value)}
+                placeholder="Insira sua senha"
+                errorMessage={errors.senha}
+              />
+            </InputContainer>
+          </ScrollViewContainer>
+          <ButtonComponent onPress={handleLogin}>Entrar</ButtonComponent>
+          <LinkComponent
+            style={{ textAlign: "center", color: "#999", fontWeight: "400" }}
+            onPress={goToRegister}
+          >
+            Ainda não tem uma conta? <Text>Criar</Text>
+          </LinkComponent>
+        </Form>
+      </KeyboardAvoidingView>
     </Container>
   );
 };

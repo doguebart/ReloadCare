@@ -4,20 +4,20 @@ export const Container = styled.View`
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   background-color: #fff;
 `;
 
 export const Title = styled.Text`
   width: 60%;
-  margin-left: 20px;
   margin-bottom: 60px;
   font-size: 30px;
   font-weight: 600;
   margin-right: 14px;
   color: #66b567;
 `;
+
+export const KeyboardAvoidingView = styled.KeyboardAvoidingView``;
 
 export const LinkContainer = styled.TouchableOpacity`
   max-width: 100%;
@@ -53,4 +53,5 @@ export const Form = styled.View`
   padding: 0 20px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 `;
