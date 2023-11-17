@@ -7,7 +7,7 @@ export const Container = styled.View`
 `;
 
 export const LabelComponent = styled.Text`
+  text-align: start;
   font-size: 18px;
-  color: #000;
+  color: #555;
 `;
-

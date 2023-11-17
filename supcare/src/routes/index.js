@@ -5,12 +5,18 @@ import Login from "../screens/auth/login";
 import Register from "../screens/auth/register";
 import Password from "../screens/auth/register/password";
 import OnBoard from './../screens/onBoard';
+import Health from "../screens/private/health";
 
 const Stack = createStackNavigator();
 
 const Routes = () => {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="Health"
+        component={Health}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="OnBoard"
         component={OnBoard}

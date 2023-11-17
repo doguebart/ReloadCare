@@ -12,10 +12,11 @@ export const Input = styled.TextInput`
   border-bottom-width: 2px;
   border-bottom-color: #eaeaea;
   padding: 10px 0;
+  font-size: 16px;
 `;
 
 export const ErrorMessage = styled.Text`
   color: red;
-  font-size: 12px;
+  font-size: 14px;
   margin-top: 5px;
 `;

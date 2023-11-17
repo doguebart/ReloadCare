@@ -11,7 +11,7 @@ import {
   Title,
 } from "./styles";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/EvilIcons";
+import Icon from "react-native-vector-icons/Feather";
 
 import Label from "../../../../components/form/label";
 import InputComponent from "../../../../components/form/input";
@@ -64,7 +64,7 @@ const Password = () => {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <LinkContainer onPress={goBack}>
-          <Icon name="arrow-left" size={30} color="#66b567" />
+          <Icon name="arrow-left" size={20} color="#66b567" />
           <Text style={{ fontSize: 20, fontWeight: "400", marginLeft: 2 }}>
             Voltar
           </Text>

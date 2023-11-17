@@ -78,6 +78,7 @@ const OnBoard = () => {
 
       <ButtonComponent
         onPress={goToRegister}
+        icon="arrow-right"
         style={{ alignSelf: "center", marginTop: 20 }}
       >
         Começar Agora

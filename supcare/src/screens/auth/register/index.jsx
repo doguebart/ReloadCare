@@ -9,6 +9,7 @@ import {
   Title,
 } from "./styles";
 import { useNavigation } from "@react-navigation/native";
+
 import Label from "../../../components/form/label";
 import InputComponent from "./../../../components/form/input";
 import ButtonComponent from "./../../../components/form/button";
@@ -32,6 +33,14 @@ const Register = () => {
 
     if (!formData.idade.trim()) {
       newErrors.idade = "Idade é obrigatória";
+    } else {
+      const age = parseInt(formData.idade);
+      if (age < 16) {
+        newErrors.idade =
+          "Você deve ter pelo menos 16 anos para criar uma conta";
+      } else if (age > 100) {
+        newErrors.idade = "Por favor, Insira a sua verdadeira idade";
+      }
     }
 
     if (!formData.email.trim()) {
@@ -64,7 +73,7 @@ const Register = () => {
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <Title>CRIE UMA NOVA CONTA</Title>
+        <Title>Crie uma conta</Title>
         <Form>
           <ScrollViewContainer>
             <InputContainer>
@@ -98,9 +107,11 @@ const Register = () => {
               />
             </InputContainer>
           </ScrollViewContainer>
-          <ButtonComponent onPress={newPassword}>Continuar</ButtonComponent>
+          <ButtonComponent onPress={newPassword} icon="arrow-right">
+            Continuar
+          </ButtonComponent>
           <LinkComponent
-            style={{ textAlign: "center", color: "#999", fontWeight: "400" }}
+            style={{ color: "#999", fontWeight: "400" }}
             onPress={goToLogin}
           >
             Já tem uma conta? <Text>Entrar</Text>

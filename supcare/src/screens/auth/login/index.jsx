@@ -62,7 +62,7 @@ const Register = () => {
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <Title>ENTRAR</Title>
+        <Title>Entrar</Title>
         <Form>
           <ScrollViewContainer>
             <InputContainer>
@@ -89,7 +89,7 @@ const Register = () => {
           </ScrollViewContainer>
           <ButtonComponent onPress={handleLogin}>Entrar</ButtonComponent>
           <LinkComponent
-            style={{ textAlign: "center", color: "#999", fontWeight: "400" }}
+            style={{ color: "#999", fontWeight: "400" }}
             onPress={goToRegister}
           >
             Ainda não tem uma conta? <Text>Criar</Text>
