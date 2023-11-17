@@ -4,11 +4,12 @@ import {
   UserContainer,
   IconContainer,
   TextContainer,
-  Text,
   Title,
+  Text,
 } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/EvilIcons";
+import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 
 const Header = () => {
   const navigation = useNavigation();
@@ -27,7 +28,12 @@ const Header = () => {
         </TextContainer>
       </UserContainer>
       <IconContainer>
-        <Icon name="bell" size={32} color="#fff" />
+        <FontAwesomeIcon
+          name="sign-out"
+          size={25}
+          color="#fff"
+          // onPress={handleLogout}
+        />
       </IconContainer>
     </Container>
   );
