@@ -7,11 +7,14 @@ import {
   KeyboardAvoidingView,
   Title,
 } from "./styles";
+import { useNavigation } from "@react-navigation/native";
+
 import Label from "../../../components/form/label";
 import InputComponent from "./../../../components/form/input";
 import ButtonComponent from "./../../../components/form/button";
 
 const Health = () => {
+  const navigation = useNavigation();
   const [formData, setFormData] = useState({
     saude: "",
     saude_mental: "",
@@ -68,7 +71,7 @@ const Health = () => {
         console.log("Formulário válido:", formData);
         // Submissão do formulário (adicione sua lógica aqui)
         // Temporariamente, você pode redirecionar para a próxima página assim:
-        // navigation.navigate("NomeDaProximaPagina");
+        navigation.navigate("Login");
       }
     } else {
       console.log("Formulário inválido, corrija os erros:", errors);

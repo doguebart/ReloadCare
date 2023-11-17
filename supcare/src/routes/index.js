@@ -6,12 +6,18 @@ import Register from "../screens/auth/register";
 import Password from "../screens/auth/register/password";
 import OnBoard from './../screens/onBoard';
 import Health from "../screens/private/health";
+import Home from "../screens/private/home";
 
 const Stack = createStackNavigator();
 
 const Routes = () => {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Health"
         component={Health}
