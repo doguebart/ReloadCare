@@ -78,6 +78,11 @@ export const Title = styled.Text`
   text-transform: capitalize;
 `;
 
+export const ScrollViewContainer = styled.ScrollView`
+  width: 100%;
+  max-height: 100%;
+`;
+
 export const Text = styled.Text`
   font-size: 18px;
   font-weight: 500;
