@@ -3,26 +3,19 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import Login from "../screens/auth/login";
 import Register from "../screens/auth/register";
-import Password from "../screens/auth/register/password";
-import OnBoard from './../screens/onBoard';
+import OnBoard from "./../screens/onBoard";
 import Health from "../screens/private/health";
 import Home from "../screens/private/home";
+import Profile from "../screens/private/profile";
+
+import Header from "../components/header";
+import Menu from "../components/menu";
 
 const Stack = createStackNavigator();
 
 const Routes = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Health"
-        component={Health}
-        options={{ headerShown: false }}
-      />
       <Stack.Screen
         name="OnBoard"
         component={OnBoard}
@@ -39,8 +32,18 @@ const Routes = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Password"
-        component={Password}
+        name="Health"
+        component={Health}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

@@ -87,7 +87,9 @@ const Register = () => {
               />
             </InputContainer>
           </ScrollViewContainer>
-          <ButtonComponent onPress={handleLogin}>Entrar</ButtonComponent>
+          <ButtonComponent onPress={handleLogin} style={{ width: "50%" }}>
+            Entrar
+          </ButtonComponent>
           <LinkComponent
             style={{ color: "#999", fontWeight: "400" }}
             onPress={goToRegister}

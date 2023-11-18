@@ -6,7 +6,7 @@ const ButtonComponent = (props) => {
   const { onPress, style, children, icon } = props;
 
   return (
-    <Container>
+    <>
       <Button style={style} onPress={onPress}>
         <Text>{children}</Text>
         {icon && (
@@ -20,7 +20,7 @@ const ButtonComponent = (props) => {
           </IconContainer>
         )}
       </Button>
-    </Container>
+    </>
   );
 };
 

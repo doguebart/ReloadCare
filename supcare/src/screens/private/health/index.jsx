@@ -158,7 +158,7 @@ const Health = () => {
           )}
         </Form>
         <ButtonComponent
-          style={{ marginLeft: 20 }}
+          style={{ width: "50%", marginLeft: 20 }}
           onPress={handleContinue}
           icon="arrow-right"
         >

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Input, ErrorMessage } from "./styles";
 
-const SelectComponent = (props) => {
+const InputComponent = (props) => {
   const {
     type,
     name,
@@ -47,4 +47,4 @@ const SelectComponent = (props) => {
   );
 };
 
-export default SelectComponent;
+export default InputComponent;
