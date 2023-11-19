@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   Container,
   Form,
+  Text,
   ScrollViewContainer,
   InputContainer,
   KeyboardAvoidingView,
@@ -10,6 +11,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 
 import Label from "../../../components/form/label";
+import LinkComponent from "../../../components/form/link";
 import InputComponent from "./../../../components/form/input";
 import ButtonComponent from "./../../../components/form/button";
 
@@ -88,6 +90,10 @@ const Register = () => {
     } else {
       console.log("Formulários inválidos, corrija os erros:", errors);
     }
+  };
+
+  const goToLogin = () => {
+    navigation.navigate("Login");
   };
 
   return (
@@ -169,6 +175,12 @@ const Register = () => {
         >
           Continuar
         </ButtonComponent>
+        <LinkComponent
+          style={{ marginLeft: 20, color: "#999", fontWeight: "400" }}
+          onPress={goToLogin}
+        >
+          Já tem uma conta? <Text>Entrar</Text>
+        </LinkComponent>
       </KeyboardAvoidingView>
     </Container>
   );
