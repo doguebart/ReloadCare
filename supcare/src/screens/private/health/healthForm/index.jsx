@@ -19,7 +19,6 @@ const HealthForm = () => {
     saude: "",
     saude_mental: "",
     substancias: "",
-    outras_substancias: "",
     frequencia_substancias: "",
     metas: "",
   });

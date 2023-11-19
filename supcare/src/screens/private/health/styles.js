@@ -12,20 +12,21 @@ export const CardContainer = styled.View`
   max-height: 100%;
   padding: 10px;
   margin-top: 20px;
+  gap: 20px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
 `;
 
-export const Card = styled.TouchableOpacity`
+export const Card = styled.View`
   width: 48%;
-  height: 150px;
+  max-height: 100%;
   padding: 14px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0px 1px 1px #999;
+  box-shadow: 0px 1px 1px #555
 `;
 
 export const CarouselItem = styled.View`
@@ -57,10 +58,11 @@ export const PaginationDot = styled.View`
 `;
 
 export const IconContainer = styled.View`
-  width: 40px;
-  height: 40px;
+  max-width: 100%;
+  max-height: 100%;
   border-radius: 10px;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
 `;
@@ -68,14 +70,21 @@ export const IconContainer = styled.View`
 export const TitleContainer = styled.View`
   width: 100%;
   max-height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 export const Title = styled.Text`
-  font-size: 20px;
+  width: 60%;
+  margin-top: 60px;
+  margin-left: 20px;
+  margin-bottom: 60px;
+  font-size: 30px;
   font-weight: 600;
-  margin: 20px 0 0 20px;
-  color: #000;
-  text-transform: capitalize;
+  margin-right: 14px;
+  color: #66b567;
 `;
 
 export const ScrollViewContainer = styled.ScrollView`
