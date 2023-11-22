@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   CardContainer,
@@ -9,14 +9,45 @@ import {
   Text,
   ScrollViewContainer,
 } from "./styles";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import api from "../../../api/api";
 import Icon from "react-native-vector-icons/EvilIcons";
 import ButtonComponent from "./../../../components/form/button";
 
 const Health = () => {
+  const [user, setUser] = useState({});
   const [isCardExpanded1, setIsCardExpanded1] = useState(true);
   const [isCardExpanded2, setIsCardExpanded2] = useState(false);
   const [isCardExpanded3, setIsCardExpanded3] = useState(false);
   const [isCardExpanded4, setIsCardExpanded4] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userId = await AsyncStorage.getItem("userId");
+        const token = await AsyncStorage.getItem("token");
+
+        if (userId && token) {
+          api
+            .get(`usuarios/${userId}`, {
+              headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`,
+              },
+            })
+            .then((response) => {
+              setUser(response.data);
+            })
+            .catch((error) => {
+              console.error("Error fetching user data:", error);
+            });
+        }
+      } catch (error) {
+        console.error("Error reading AsyncStorage:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleToggleCard1 = () => {
     setIsCardExpanded1(!isCardExpanded1);
@@ -50,7 +81,7 @@ const Health = () => {
         <Text
           style={{ fontSize: 18, fontWeight: 500, color: "#000", opacity: 0.5 }}
         >
-          Douglas Welber, 18 anos
+          {user.nome}, {user.age}
         </Text>
       </TitleContainer>
 
@@ -205,7 +236,9 @@ const Health = () => {
             )}
           </Card>
         </CardContainer>
-        <ButtonComponent style={{ width: "50%", alignSelf: "center", marginTop: 20 }}>
+        <ButtonComponent
+          style={{ width: "50%", alignSelf: "center", marginTop: 20 }}
+        >
           Nova Avaliação
         </ButtonComponent>
       </ScrollViewContainer>

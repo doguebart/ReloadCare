@@ -58,6 +58,19 @@ const useAuth = () => {
     }
   };
 
+  const edit = async (user) => {
+    try {
+      const data = await api.put(`usuarios/${id}`, user).then((response) => {
+        return response.data;
+      });
+      await AsyncStorage.setItem("userId", JSON.stringify(data.id));
+      setIsAuthenticated(true);
+      navigation.navigate("Home");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const del = async (userId) => {
     try {
       await api.delete(`usuarios/${userId}`).then((response) => {
@@ -73,10 +86,18 @@ const useAuth = () => {
   };
 
   const authUser = async (data) => {
-    await AsyncStorage.setItem("token", JSON.stringify(data.token));
-    await AsyncStorage.setItem("userId", JSON.stringify(data.id));
-    setIsAuthenticated(true);
-    navigation.navigate("Home");
+    try {
+      if (data && data.token && data.id) {
+        await AsyncStorage.setItem("token", JSON.stringify(data.token));
+        await AsyncStorage.setItem("userId", JSON.stringify(data.id));
+        setIsAuthenticated(true);
+        navigation.navigate("Home");
+      } else {
+        console.log("Invalid data received for authentication");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const logout = async () => {
@@ -87,7 +108,7 @@ const useAuth = () => {
     navigation.navigate("Login");
   };
 
-  return { isAuthenticated, isLoading, register, login, del, logout };
+  return { isAuthenticated, isLoading, register, login, edit, del, logout };
 };
 
 export default useAuth;

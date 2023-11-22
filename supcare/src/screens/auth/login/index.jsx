@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Container,
   Form,
@@ -14,11 +14,14 @@ import InputComponent from "./../../../components/form/input";
 import ButtonComponent from "./../../../components/form/button";
 import LinkComponent from "./../../../components/form/link";
 
+import { Context } from "../../../context/UserContext";
+
 const Register = () => {
   const navigation = useNavigation();
   const [formData, setFormData] = useState({ email: "", senha: "" });
   const [validationPerformed, setValidationPerformed] = useState(false);
   const [errors, setErrors] = useState({});
+  const { login } = useContext(Context);
 
   const handleInputChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
@@ -48,6 +51,7 @@ const Register = () => {
     setValidationPerformed(true);
 
     if (validateForm()) {
+      login(formData);
     } else {
       console.log("Formulário inválido, corrija os erros:", errors);
     }

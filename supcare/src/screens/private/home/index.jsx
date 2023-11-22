@@ -36,7 +36,7 @@ const Home = () => {
       <Header />
       <ScrollViewContainer>
         <CardContainer>
-          <Card style={{ backgroundColor: "#66b567" }}>
+          {/* <Card style={{ backgroundColor: "#66b567" }}>
             <IconContainer style={{ backgroundColor: "#458446" }}>
               <Icon name="plus" size={30} color="#fff" />
             </IconContainer>
@@ -54,8 +54,8 @@ const Home = () => {
                 Criar nova estratégia
               </Title>
             </TitleContainer>
-          </Card>
-          <Card style={{ backgroundColor: "#66b567" }}>
+          </Card> */}
+          <Card style={{ width: "100%", height: "200px", backgroundColor: "#66b567" }}>
             <IconContainer style={{ backgroundColor: "#458446" }}>
               <Icon name="archive" size={30} color="#fff" />
             </IconContainer>
@@ -124,7 +124,6 @@ const Home = () => {
           </PaginationContainer>
         </CarouselItem>
       </ScrollViewContainer>
-      <Menu />
     </Container>
   );
 };
