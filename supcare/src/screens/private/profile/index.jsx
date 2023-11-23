@@ -34,7 +34,7 @@ const Profile = () => {
   const [validationPerformed, setValidationPerformed] = useState(false);
   const [errors, setErrors] = useState({});
 
-  const { edit, del } = useContext(Context);
+  const { del } = useContext(Context);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,6 +51,13 @@ const Profile = () => {
             })
             .then((response) => {
               setUser(response.data);
+              setFormData({
+                nome: response.data.nome,
+                idade: response.data.age,
+                email: response.data.email,
+                senha: response.data.senha,
+                cf_senha: "",
+              });
             })
             .catch((error) => {
               console.error("Error fetching user data:", error);
@@ -112,23 +119,32 @@ const Profile = () => {
     setValidationPerformed(true);
 
     if (validateForm()) {
-      const user = formData;
-      const requestBody = {
-        nome: user.nome,
-        age: user.idade,
-        email: user.email,
-        senha: user.senha,
-      };
+      const isDataChanged =
+        user.nome !== formData.nome ||
+        user.age !== formData.idade ||
+        user.email !== formData.email ||
+        user.senha !== formData.senha;
 
-      console.log("Formulários válidos:", requestBody);
+      if (isDataChanged) {
+        const updatedUser = {
+          nome: formData.nome,
+          age: formData.idade,
+          email: formData.email,
+          senha: formData.senha,
+        };
 
-      try {
-        await edit(requestBody);
-      } catch (error) {
-        console.log("Erro durante o registro:", error);
+        try {
+          await api.put(`usuarios/${user.id}`, updatedUser);
+          setUser(updatedUser);
+          setEditMode(false);
+        } catch (error) {
+          console.log("Error during update:", error);
+        }
+      } else {
+        setEditMode(false);
       }
     } else {
-      console.log("Formulários inválidos, corrija os erros:", errors);
+      console.log("Form validation failed, correct errors:", errors);
     }
   };
 
@@ -172,7 +188,7 @@ const Profile = () => {
                   name="nome"
                   onChangeText={(value) => handleInputChange("nome", value)}
                   placeholder="Insira seu nome completo"
-                  value={user.nome}
+                  value={formData.nome}
                   errorMessage={validationPerformed && errors.nome}
                 />
               </InputContainer>
@@ -183,7 +199,7 @@ const Profile = () => {
                   name="idade"
                   onChangeText={(value) => handleInputChange("idade", value)}
                   placeholder="Insira sua idade"
-                  value={user.age}
+                  value={formData.idade}
                   errorMessage={validationPerformed && errors.idade}
                 />
               </InputContainer>
@@ -194,7 +210,7 @@ const Profile = () => {
                   name="email"
                   onChangeText={(value) => handleInputChange("email", value)}
                   placeholder="Insira um e-mail válido"
-                  value={user.email}
+                  value={formData.email}
                   errorMessage={validationPerformed && errors.email}
                 />
               </InputContainer>
@@ -206,7 +222,7 @@ const Profile = () => {
                   secureTextEntry={true}
                   onChangeText={(value) => handleInputChange("senha", value)}
                   placeholder="Insira uma senha forte"
-                  value={user.senha}
+                  value={formData.senha}
                   errorMessage={validationPerformed && errors.senha}
                 />
               </InputContainer>
@@ -218,7 +234,7 @@ const Profile = () => {
                   secureTextEntry={true}
                   onChangeText={(value) => handleInputChange("cf_senha", value)}
                   placeholder="As senhas devem ser iguais"
-                  value={user.senha}
+                  value={formData.cf_senha}
                   errorMessage={validationPerformed && errors.cf_senha}
                 />
               </InputContainer>

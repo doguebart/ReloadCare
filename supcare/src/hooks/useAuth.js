@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import api from "../api/api.js";
 
 const useAuth = () => {
+  const [user, setUser] = useState({});
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [id, setId] = useState();
@@ -21,6 +22,13 @@ const useAuth = () => {
           api.defaults.headers.authorization = `Bearer ${JSON.parse(token)}`;
           setIsAuthenticated(true);
           setIsLoading(false);
+
+          try {
+            const response = await api.get(`usuarios/${userId}`);
+            setUser(response.data);
+          } catch (error) {
+            console.error("Error fetching user data:", error);
+          }
         } else {
           setIsLoading(false);
         }
@@ -31,6 +39,15 @@ const useAuth = () => {
 
     getTokenAndUserId();
   }, []);
+
+  const updateUser = async () => {
+    try {
+      const response = await api.get(`usuarios/${id}`);
+      setUser(response.data);
+    } catch (error) {
+      console.error("Error fetching updated user data:", error);
+    }
+  };
 
   const register = async (user) => {
     try {
@@ -58,18 +75,18 @@ const useAuth = () => {
     }
   };
 
-  const edit = async (user) => {
-    try {
-      const data = await api.put(`usuarios/${id}`, user).then((response) => {
-        return response.data;
-      });
-      await AsyncStorage.setItem("userId", JSON.stringify(data.id));
-      setIsAuthenticated(true);
-      navigation.navigate("Home");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const edit = async (user) => {
+  //   try {
+  //     const data = await api.put(`usuarios/${id}`, user).then((response) => {
+  //       return response.data;
+  //     });
+  //     await AsyncStorage.setItem("userId", JSON.stringify(data.id));
+  //     setIsAuthenticated(true);
+  //     navigation.navigate("Home");
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const del = async (userId) => {
     try {
@@ -108,7 +125,16 @@ const useAuth = () => {
     navigation.navigate("Login");
   };
 
-  return { isAuthenticated, isLoading, register, login, edit, del, logout };
+  return {
+    isAuthenticated,
+    isLoading,
+    user,
+    updateUser,
+    register,
+    login,
+    del,
+    logout,
+  };
 };
 
 export default useAuth;

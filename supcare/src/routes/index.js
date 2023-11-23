@@ -1,36 +1,54 @@
 import React, { useContext } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+import { Context } from "../context/UserContext.jsx";
 
 import Login from "../screens/auth/login";
 import Register from "../screens/auth/register";
 import OnBoard from "./../screens/onBoard";
-import HealthForm from "../screens/private/health/healthForm";
 import Health from "../screens/private/health";
 import Home from "../screens/private/home";
 import Profile from "../screens/private/profile";
 import Strategies from "../screens/private/strategies";
 import Menu from "../components/menu";
+import Password from "./../screens/auth/register/password";
+import Saude from "./../screens/private/health/healthForm/saude";
+import SaudeMental from "../screens/private/health/healthForm/saudeMental";
+import Substancias from "../screens/private/health/healthForm/substanciasFrequencia";
+import Goals from "./../screens/private/health/healthForm/goals";
 
-import { Context } from "../context/UserContext.jsx";
-import Password from './../screens/auth/register/password';
 const Stack = createStackNavigator();
 
 const AppRoutes = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="HealthForm"
-        component={HealthForm}
+        name="Home"
+        component={Home}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Saude"
+        component={Saude}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SaudeMental"
+        component={SaudeMental}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Substancias"
+        component={Substancias}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Goals"
+        component={Goals}
         options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Strategies"
         component={Strategies}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Home"
-        component={Home}
         options={{ headerShown: false }}
       />
       <Stack.Screen

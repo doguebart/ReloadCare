@@ -13,12 +13,11 @@ import Icon from "react-native-vector-icons/EvilIcons";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import api from "../../api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Alert } from "react-native"; // Import Alert component
+import { Alert } from "react-native";
 
 const Header = () => {
-  const [user, setUser] = useState({});
   const navigation = useNavigation();
-  const { logout } = useContext(Context);
+  const { user, updateUser, logout } = useContext(Context);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +33,7 @@ const Header = () => {
               },
             })
             .then((response) => {
-              setUser(response.data);
+              updateUser(response.data);
             })
             .catch((error) => {
               console.error("Error fetching user data:", error);
@@ -47,6 +46,10 @@ const Header = () => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    updateUser();
+  }, [user]);
 
   const goToProfile = () => {
     navigation.navigate("Profile");

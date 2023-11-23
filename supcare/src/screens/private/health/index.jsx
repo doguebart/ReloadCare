@@ -9,12 +9,14 @@ import {
   Text,
   ScrollViewContainer,
 } from "./styles";
+import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import api from "../../../api/api";
 import Icon from "react-native-vector-icons/EvilIcons";
 import ButtonComponent from "./../../../components/form/button";
 
 const Health = () => {
+  const navigation = useNavigation();
   const [user, setUser] = useState({});
   const [isCardExpanded1, setIsCardExpanded1] = useState(true);
   const [isCardExpanded2, setIsCardExpanded2] = useState(false);
@@ -35,7 +37,9 @@ const Health = () => {
               },
             })
             .then((response) => {
-              setUser(response.data);
+              setUser((prevUser) => {
+                return { ...prevUser, ...response.data };
+              });
             })
             .catch((error) => {
               console.error("Error fetching user data:", error);
@@ -65,6 +69,10 @@ const Health = () => {
     setIsCardExpanded4(!isCardExpanded4);
   };
 
+  const goToHealthForms = () => {
+    navigation.navigate("Saude");
+  };
+
   return (
     <Container>
       <Title style={{ marginBottom: 20 }}>Meu registro de saúde</Title>
@@ -87,156 +95,158 @@ const Health = () => {
 
       <ScrollViewContainer>
         <CardContainer>
-          <Card
-            style={{
-              width: "100%",
-              backgroundColor: "#66b567",
-              flex: 1,
-            }}
-          >
-            <TitleContainer>
-              <Text style={{ fontSize: 20, fontWeight: 500, color: "white" }}>
-                Saúde
-              </Text>
-              <Icon
-                name={isCardExpanded1 ? "chevron-up" : "chevron-down"}
-                size={30}
-                style={{ marginLeft: 10 }}
-                color="#fff"
-                onPress={handleToggleCard1}
-              />
-            </TitleContainer>
-
-            {isCardExpanded1 && (
-              <Text
+          {user.healthRegisters && user.healthRegisters.length > 0 && (
+            <>
+              <Card
                 style={{
-                  fontSize: 16,
-                  marginTop: 20,
-                  fontWeight: 40,
-                  color: "white",
-                  opacity: 0.7,
+                  width: "100%",
+                  backgroundColor: "#66b567",
+                  flex: 1,
                 }}
               >
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui
-                laudantium odio quos temporibus repellat tempora doloribus
-                facere sed, reprehenderit obcaecati doloremque beatae quas
-                pariatur cupiditate, debitis maxime nobis eaque voluptas!
-              </Text>
-            )}
-          </Card>
-          <Card
-            style={{
-              width: "100%",
-              backgroundColor: "#66b567",
-              flex: 1,
-            }}
-          >
-            <TitleContainer>
-              <Text style={{ fontSize: 20, fontWeight: 500, color: "white" }}>
-                Saúde Mental
-              </Text>
-              <Icon
-                name={isCardExpanded2 ? "chevron-up" : "chevron-down"}
-                size={30}
-                style={{ marginLeft: 10 }}
-                color="#fff"
-                onPress={handleToggleCard2}
-              />
-            </TitleContainer>
+                <TitleContainer>
+                  <Text
+                    style={{ fontSize: 20, fontWeight: 500, color: "white" }}
+                  >
+                    Saúde
+                  </Text>
+                  <Icon
+                    name={isCardExpanded1 ? "chevron-up" : "chevron-down"}
+                    size={30}
+                    style={{ marginLeft: 10 }}
+                    color="#fff"
+                    onPress={handleToggleCard1}
+                  />
+                </TitleContainer>
 
-            {isCardExpanded2 && (
-              <Text
+                {isCardExpanded1 && (
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      marginTop: 20,
+                      fontWeight: 40,
+                      color: "white",
+                      opacity: 0.7,
+                    }}
+                  >
+                    {user.healthRegisters[0].health}
+                  </Text>
+                )}
+              </Card>
+              <Card
                 style={{
-                  fontSize: 16,
-                  marginTop: 20,
-                  fontWeight: 40,
-                  color: "white",
-                  opacity: 0.7,
+                  width: "100%",
+                  backgroundColor: "#66b567",
+                  flex: 1,
                 }}
               >
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui
-                laudantium odio quos temporibus repellat tempora doloribus
-                facere sed, reprehenderit obcaecati doloremque beatae quas
-                pariatur cupiditate, debitis maxime nobis eaque voluptas!
-              </Text>
-            )}
-          </Card>
-          <Card
-            style={{
-              width: "100%",
-              backgroundColor: "#66b567",
-              flex: 1,
-            }}
-          >
-            <TitleContainer>
-              <Text style={{ fontSize: 20, fontWeight: 500, color: "white" }}>
-                Substâncias e Frequência
-              </Text>
-              <Icon
-                name={isCardExpanded3 ? "chevron-up" : "chevron-down"}
-                size={30}
-                style={{ marginLeft: 10 }}
-                color="#fff"
-                onPress={handleToggleCard3}
-              />
-            </TitleContainer>
+                <TitleContainer>
+                  <Text
+                    style={{ fontSize: 20, fontWeight: 500, color: "white" }}
+                  >
+                    Saúde Mental
+                  </Text>
+                  <Icon
+                    name={isCardExpanded2 ? "chevron-up" : "chevron-down"}
+                    size={30}
+                    style={{ marginLeft: 10 }}
+                    color="#fff"
+                    onPress={handleToggleCard2}
+                  />
+                </TitleContainer>
 
-            {isCardExpanded3 && (
-              <Text
+                {isCardExpanded2 && (
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      marginTop: 20,
+                      fontWeight: 40,
+                      color: "white",
+                      opacity: 0.7,
+                    }}
+                  >
+                    {user.healthRegisters[0].mentalHealth}
+                  </Text>
+                )}
+              </Card>
+              <Card
                 style={{
-                  fontSize: 16,
-                  marginTop: 20,
-                  fontWeight: 40,
-                  color: "white",
-                  opacity: 0.7,
+                  width: "100%",
+                  backgroundColor: "#66b567",
+                  flex: 1,
                 }}
               >
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui
-                laudantium odio quos temporibus repellat tempora doloribus
-                facere sed, reprehenderit obcaecati doloremque beatae quas
-                pariatur cupiditate, debitis maxime nobis eaque voluptas!
-              </Text>
-            )}
-          </Card>
-          <Card
-            style={{
-              width: "100%",
-              backgroundColor: "#66b567",
-              flex: 1,
-            }}
-          >
-            <TitleContainer>
-              <Text style={{ fontSize: 20, fontWeight: 500, color: "white" }}>
-                Minhas Metas
-              </Text>
-              <Icon
-                name={isCardExpanded4 ? "chevron-up" : "chevron-down"}
-                size={30}
-                style={{ marginLeft: 10 }}
-                color="#fff"
-                onPress={handleToggleCard4}
-              />
-            </TitleContainer>
+                <TitleContainer>
+                  <Text
+                    style={{ fontSize: 20, fontWeight: 500, color: "white" }}
+                  >
+                    Substâncias e Frequência
+                  </Text>
+                  <Icon
+                    name={isCardExpanded3 ? "chevron-up" : "chevron-down"}
+                    size={30}
+                    style={{ marginLeft: 10 }}
+                    color="#fff"
+                    onPress={handleToggleCard3}
+                  />
+                </TitleContainer>
 
-            {isCardExpanded4 && (
-              <Text
+                {isCardExpanded3 && (
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      marginTop: 20,
+                      fontWeight: 40,
+                      color: "white",
+                      opacity: 0.7,
+                    }}
+                  >
+                    {user.healthRegisters[0].substances}, {" "}
+                    {user.healthRegisters[0].substanceFrequencies}.
+                  </Text>
+                )}
+              </Card>
+              <Card
                 style={{
-                  fontSize: 16,
-                  marginTop: 20,
-                  fontWeight: 40,
-                  color: "white",
-                  opacity: 0.7,
+                  width: "100%",
+                  backgroundColor: "#66b567",
+                  flex: 1,
                 }}
               >
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui
-                laudantium odio quos temporibus repellat tempora doloribus
-                facere sed, reprehenderit obcaecati doloremque beatae quas
-                pariatur cupiditate, debitis maxime nobis eaque voluptas!
-              </Text>
-            )}
-          </Card>
+                <TitleContainer>
+                  <Text
+                    style={{ fontSize: 20, fontWeight: 500, color: "white" }}
+                  >
+                    Minhas Metas
+                  </Text>
+                  <Icon
+                    name={isCardExpanded4 ? "chevron-up" : "chevron-down"}
+                    size={30}
+                    style={{ marginLeft: 10 }}
+                    color="#fff"
+                    onPress={handleToggleCard4}
+                  />
+                </TitleContainer>
+
+                {isCardExpanded4 && (
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      marginTop: 20,
+                      fontWeight: 40,
+                      color: "white",
+                      opacity: 0.7,
+                    }}
+                  >
+                    {user.healthRegisters[0].goals}
+                  </Text>
+                )}
+              </Card>
+            </>
+          )}
         </CardContainer>
         <ButtonComponent
+          onPress={goToHealthForms}
           style={{ width: "50%", alignSelf: "center", marginTop: 20 }}
         >
           Nova Avaliação

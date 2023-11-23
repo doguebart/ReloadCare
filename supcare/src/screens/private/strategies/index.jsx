@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   CardContainer,
@@ -9,14 +9,50 @@ import {
   Text,
   ScrollViewContainer,
 } from "./styles";
+import OpenAI from "openai";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import axios from "axios";
 import Icon from "react-native-vector-icons/EvilIcons";
 
 const Strategies = () => {
+  const route = useRoute();
+  const [loading, setLoading] = useState(false);
   const [isCardExpanded, setIsCardExpanded] = useState(false);
+
+  const { health, mentalHealth, substances, substanceFrequencies, goals } =
+    route.params;
 
   const handleToggleCard = () => {
     setIsCardExpanded(!isCardExpanded);
   };
+
+  const prompt = `Estamos usando a api do chatgpt para gerar conselhos/estratégias para combater o uso das substancias, vou te enviar alguns dados do registro de saude do usuario e quero que você crie um conselho ou estratégia para ajudar essa pessoa a parar com o uso de substancias
+
+  Estado de sáude ou doenças do usuario: ${health},
+  Estado de sáude mental do usuário: ${mentalHealth},
+  Substancias que o usuario utiliza: ${substances},
+  Frequencia em que ele utiliza essas substancias: ${substanceFrequencies},
+  Meta do usuário com o uso do nosso app (sua ajuda): ${goals},
+  `;
+
+  // console.log(prompt);
+
+  const openai = new OpenAI({
+    apiKey: "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",
+  });
+
+  const handleChatGpt = async () => {
+    const completion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [{ role: "user", content: prompt }],
+    });
+
+    console.log(completion.choices[0]);
+  };
+
+  useEffect(() => {
+    handleChatGpt();
+  }, []);
 
   return (
     <Container>

@@ -12,6 +12,8 @@ import {
   Title,
   ScrollViewContainer,
 } from "./styles";
+import { useNavigation } from "@react-navigation/native";
+
 import Icon from "react-native-vector-icons/EvilIcons";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import Carousel from "react-native-snap-carousel";
@@ -19,9 +21,9 @@ import Carousel from "react-native-snap-carousel";
 import bannerAi from "../../../assets/bannerai.png";
 import bannerMetas from "../../../assets/bannerMetas.png";
 import Header from "../../../components/header";
-import Menu from "../../../components/menu";
 
 const Home = () => {
+  const navigation = useNavigation();
   const [activeSlide, setActiveSlide] = useState(0);
 
   const data = [
@@ -31,12 +33,27 @@ const Home = () => {
 
   const renderItem = ({ item }) => <ImageBanner source={item.image} />;
 
+  const goToHealth = () => {
+    navigation.navigate("Health");
+  };
+
+  const goToStrategies = () => {
+    navigation.navigate("Strategies");
+  };
+
+  const goToHealthForms = () => {
+    navigation.navigate("Saude");
+  };
+
   return (
     <Container>
       <Header />
       <ScrollViewContainer>
         <CardContainer>
-          {/* <Card style={{ backgroundColor: "#66b567" }}>
+          <Card
+            onPress={goToHealthForms}
+            style={{ backgroundColor: "#66b567" }}
+          >
             <IconContainer style={{ backgroundColor: "#458446" }}>
               <Icon name="plus" size={30} color="#fff" />
             </IconContainer>
@@ -51,11 +68,18 @@ const Home = () => {
                   marginTop: 10,
                 }}
               >
-                Criar nova estratégia
+                Novo Registro de saúde
               </Title>
             </TitleContainer>
-          </Card> */}
-          <Card style={{ width: "100%", height: "200px", backgroundColor: "#66b567" }}>
+          </Card>
+          <Card
+            onPress={goToHealth}
+            style={{
+              width: "50%",
+              height: "200px",
+              backgroundColor: "#66b567",
+            }}
+          >
             <IconContainer style={{ backgroundColor: "#458446" }}>
               <Icon name="archive" size={30} color="#fff" />
             </IconContainer>
@@ -76,6 +100,7 @@ const Home = () => {
           </Card>
         </CardContainer>
         <Card
+          onPress={goToStrategies}
           style={{
             width: "95%",
             height: "200px",
