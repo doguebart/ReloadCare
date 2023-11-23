@@ -9,107 +9,396 @@ import {
   Text,
   ScrollViewContainer,
 } from "./styles";
-import OpenAI from "openai";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Alert } from "react-native";
 import Icon from "react-native-vector-icons/EvilIcons";
+import ButtonComponent from "../../../components/form/button";
+
+import api from "../../../api/api";
 
 const Strategies = () => {
-  const route = useRoute();
-  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState({});
+  const [isCardExpanded1, setIsCardExpanded1] = useState(true);
+  const [isCardExpanded2, setIsCardExpanded2] = useState(false);
+  const [isCardExpanded3, setIsCardExpanded3] = useState(false);
+  const [isCardExpanded4, setIsCardExpanded4] = useState(false);
   const [isCardExpanded, setIsCardExpanded] = useState(false);
+  const [showStrategyCard, setShowStrategyCard] = useState(false);
 
-  const { health, mentalHealth, substances, substanceFrequencies, goals } =
-    route.params;
+  const handleToggleCard1 = () => {
+    setIsCardExpanded1(!isCardExpanded1);
+  };
+
+  const handleToggleCard2 = () => {
+    setIsCardExpanded2(!isCardExpanded2);
+  };
+
+  const handleToggleCard3 = () => {
+    setIsCardExpanded3(!isCardExpanded3);
+  };
+
+  const handleToggleCard4 = () => {
+    setIsCardExpanded4(!isCardExpanded4);
+  };
 
   const handleToggleCard = () => {
     setIsCardExpanded(!isCardExpanded);
   };
 
-  const prompt = `Estamos usando a api do chatgpt para gerar conselhos/estratégias para combater o uso das substancias, vou te enviar alguns dados do registro de saude do usuario e quero que você crie um conselho ou estratégia para ajudar essa pessoa a parar com o uso de substancias
-
-  Estado de sáude ou doenças do usuario: ${health},
-  Estado de sáude mental do usuário: ${mentalHealth},
-  Substancias que o usuario utiliza: ${substances},
-  Frequencia em que ele utiliza essas substancias: ${substanceFrequencies},
-  Meta do usuário com o uso do nosso app (sua ajuda): ${goals},
-  `;
-
-  // console.log(prompt);
-
-  const openai = new OpenAI({
-    apiKey: "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",
-  });
-
-  const handleChatGpt = async () => {
-    const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: prompt }],
-    });
-
-    console.log(completion.choices[0]);
+  const handleCreateStrategy = () => {
+    // Adicione lógica aqui para criar a estratégia, se necessário
+    setShowStrategyCard(true);
   };
 
   useEffect(() => {
-    handleChatGpt();
+    const fetchData = async () => {
+      try {
+        const userId = await AsyncStorage.getItem("userId");
+        const token = await AsyncStorage.getItem("token");
+
+        if (userId && token) {
+          api
+            .get(`usuarios/${userId}`, {
+              headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`,
+              },
+            })
+            .then((response) => {
+              setUser((prevUser) => {
+                return { ...prevUser, ...response.data };
+              });
+            })
+            .catch((error) => {
+              console.error("Error fetching user data:", error);
+            });
+        }
+      } catch (error) {
+        console.error("Error reading AsyncStorage:", error);
+      }
+    };
+
+    fetchData();
   }, []);
+
+  const handleDeleteCard = () => {
+    Alert.alert(
+      "Confirmação",
+      "Tem certeza que deseja excluir essa estratégia?",
+      [
+        {
+          text: "Cancelar",
+          style: "cancel",
+        },
+        {
+          text: "Excluir",
+          onPress: () => {
+            setShowStrategyCard(false);
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
 
   return (
     <Container>
-      <Title style={{ marginTop: 60, marginBottom: 0 }}>
-        39 Estratégias Encontradas
-      </Title>
-      <ScrollViewContainer>
-        <CardContainer>
-          <Card
-            style={{
-              width: "100%",
-              backgroundColor: "#66b567",
-              height: isCardExpanded ? "200%" : "auto",
-            }}
-          >
-            <TitleContainer>
-              <Text style={{ fontSize: 20, fontWeight: 500, color: "white" }}>
-                Estratégia 1
-              </Text>
-              <IconContainer>
-                <Icon name="trash" size={30} color="#fff" />
-                <Icon
-                  name={isCardExpanded ? "chevron-up" : "chevron-down"}
-                  size={30}
-                  style={{ marginLeft: 10 }}
-                  color="#fff"
-                  onPress={handleToggleCard}
-                />
-              </IconContainer>
-            </TitleContainer>
-
-            {isCardExpanded && (
-              <Text
+      {showStrategyCard ? (
+        <>
+          <Title style={{ marginLeft: 10, marginTop: 60, marginBottom: 20 }}>
+            Estratégias e Conselhos
+          </Title>
+          <ScrollViewContainer>
+            <CardContainer>
+              <Card
                 style={{
-                  fontSize: 16,
-                  fontWeight: 40,
-                  color: "white",
-                  opacity: 0.7,
+                  width: "100%",
+                  backgroundColor: "#66b567",
+                  height: isCardExpanded ? "200%" : "auto",
                 }}
               >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla
-                ex iste eius enim obcaecati dolores, eum laudantium nesciunt
-                voluptas unde quaerat, quae illo eos iure, temporibus commodi
-                perspiciatis esse error reiciendis ratione animi facilis. Animi
-                ut ad laborum nemo, sequi eveniet maxime reprehenderit voluptate
-                eos dolore omnis quas explicabo rerum corporis, modi laudantium
-                obcaecati saepe rem, officiis deleniti perspiciatis blanditiis
-                inventore. Ipsum rem ipsa, sapiente quis harum minima assumenda
-                id laudantium magni maxime quaerat ullam provident, alias earum,
-                vel incidunt dolorum repudiandae autem? Cupiditate quas mollitia
-                sunt atque tenetur accusantium odit neque numquam incidunt vero
-                laboriosam reprehenderit placeat, possimus iusto?
-              </Text>
-            )}
-          </Card>
-        </CardContainer>
-      </ScrollViewContainer>
+                <TitleContainer>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: 500,
+                      color: "white",
+                      marginBottom: 0,
+                    }}
+                  >
+                    Estratégia 1
+                  </Text>
+                  <IconContainer>
+                    <Icon
+                      name="trash"
+                      onPress={handleDeleteCard}
+                      size={30}
+                      color="#fff"
+                    />
+                    <Icon
+                      name={isCardExpanded ? "chevron-up" : "chevron-down"}
+                      size={30}
+                      style={{ marginLeft: 10 }}
+                      color="#fff"
+                      onPress={handleToggleCard}
+                    />
+                  </IconContainer>
+                </TitleContainer>
+
+                {isCardExpanded && (
+                  <>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: 40,
+                        paddingBottom: 10,
+                        marginTop: 20,
+                        color: "white",
+                        opacity: 0.7,
+                      }}
+                    >
+                      Marque uma data para parar. Isso lhe dará um objetivo a
+                      alcançar e ajudará a manter você motivado. Comece a
+                      reduzir a quantidade de maconha que você fuma
+                      gradualmente. Isso ajudará a diminuir os sintomas de
+                      abstinência.
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: 40,
+                        paddingBottom: 10,
+                        marginTop: 5,
+                        color: "white",
+                        opacity: 0.7,
+                      }}
+                    >
+                      Identifique seus gatilhos. Quais são as situações ou
+                      emoções que o levam a fumar maconha? Evite esses gatilhos
+                      o máximo possível. Encontre outras formas de lidar com o
+                      estresse e a ansiedade. Exercício, meditação e técnicas de
+                      respiração são ótimas opções.
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: 40,
+                        paddingBottom: 10,
+                        marginTop: 5,
+                        color: "white",
+                        opacity: 0.7,
+                      }}
+                    >
+                      Procure ajuda profissional. Se você estiver lutando para
+                      parar de fumar sozinho, procure o apoio de um terapeuta ou
+                      conselheiro.
+                    </Text>
+                  </>
+                )}
+              </Card>
+            </CardContainer>
+          </ScrollViewContainer>
+        </>
+      ) : (
+        <>
+          <Title
+            style={{
+              textTransform: "capitalize",
+              marginLeft: 10,
+              marginTop: 60,
+              marginBottom: 20,
+            }}
+          >
+            Crie uma nova estratégia
+          </Title>
+          <Text
+            style={{
+              marginLeft: 10,
+              fontSize: 14,
+              fontWeight: 400,
+              color: "#999",
+              opacity: 0.5,
+            }}
+          >
+            *A estratégia será criada com base nos dados abaixo, fornecidos no
+            seu registro de saúde
+          </Text>
+          <ScrollViewContainer>
+            <CardContainer>
+              {user.healthRegisters && user.healthRegisters.length > 0 && (
+                <>
+                  <Card
+                    style={{
+                      width: "100%",
+                      backgroundColor: "#66b567",
+                      flex: 1,
+                    }}
+                  >
+                    <TitleContainer>
+                      <Text
+                        style={{
+                          fontSize: 20,
+                          fontWeight: 500,
+                          color: "white",
+                        }}
+                      >
+                        Saúde
+                      </Text>
+                      <Icon
+                        name={isCardExpanded1 ? "chevron-up" : "chevron-down"}
+                        size={30}
+                        style={{ marginLeft: 10 }}
+                        color="#fff"
+                        onPress={handleToggleCard1}
+                      />
+                    </TitleContainer>
+
+                    {isCardExpanded1 && (
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          marginTop: 20,
+                          fontWeight: 40,
+                          color: "white",
+                          opacity: 0.7,
+                        }}
+                      >
+                        {user.healthRegisters[0].health}
+                      </Text>
+                    )}
+                  </Card>
+                  <Card
+                    style={{
+                      width: "100%",
+                      backgroundColor: "#66b567",
+                      flex: 1,
+                    }}
+                  >
+                    <TitleContainer>
+                      <Text
+                        style={{
+                          fontSize: 20,
+                          fontWeight: 500,
+                          color: "white",
+                        }}
+                      >
+                        Saúde Mental
+                      </Text>
+                      <Icon
+                        name={isCardExpanded2 ? "chevron-up" : "chevron-down"}
+                        size={30}
+                        style={{ marginLeft: 10 }}
+                        color="#fff"
+                        onPress={handleToggleCard2}
+                      />
+                    </TitleContainer>
+
+                    {isCardExpanded2 && (
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          marginTop: 20,
+                          fontWeight: 40,
+                          color: "white",
+                          opacity: 0.7,
+                        }}
+                      >
+                        {user.healthRegisters[0].mentalHealth}
+                      </Text>
+                    )}
+                  </Card>
+                  <Card
+                    style={{
+                      width: "100%",
+                      backgroundColor: "#66b567",
+                      flex: 1,
+                    }}
+                  >
+                    <TitleContainer>
+                      <Text
+                        style={{
+                          fontSize: 20,
+                          fontWeight: 500,
+                          color: "white",
+                        }}
+                      >
+                        Substâncias e Frequência
+                      </Text>
+                      <Icon
+                        name={isCardExpanded3 ? "chevron-up" : "chevron-down"}
+                        size={30}
+                        style={{ marginLeft: 10 }}
+                        color="#fff"
+                        onPress={handleToggleCard3}
+                      />
+                    </TitleContainer>
+
+                    {isCardExpanded3 && (
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          marginTop: 20,
+                          fontWeight: 40,
+                          color: "white",
+                          opacity: 0.7,
+                        }}
+                      >
+                        {user.healthRegisters[0].substances},{" "}
+                        {user.healthRegisters[0].substanceFrequencies}.
+                      </Text>
+                    )}
+                  </Card>
+                  <Card
+                    style={{
+                      width: "100%",
+                      backgroundColor: "#66b567",
+                      flex: 1,
+                    }}
+                  >
+                    <TitleContainer>
+                      <Text
+                        style={{
+                          fontSize: 20,
+                          fontWeight: 500,
+                          color: "white",
+                        }}
+                      >
+                        Minhas Metas
+                      </Text>
+                      <Icon
+                        name={isCardExpanded4 ? "chevron-up" : "chevron-down"}
+                        size={30}
+                        style={{ marginLeft: 10 }}
+                        color="#fff"
+                        onPress={handleToggleCard4}
+                      />
+                    </TitleContainer>
+
+                    {isCardExpanded4 && (
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          marginTop: 20,
+                          fontWeight: 40,
+                          color: "white",
+                          opacity: 0.7,
+                        }}
+                      >
+                        {user.healthRegisters[0].goals}
+                      </Text>
+                    )}
+                  </Card>
+                </>
+              )}
+            </CardContainer>
+            <ButtonComponent
+              onPress={handleCreateStrategy}
+              style={{ width: "50%", alignSelf: "center", marginTop: 20 }}
+            >
+              Criar estratégia
+            </ButtonComponent>
+          </ScrollViewContainer>
+        </>
+      )}
     </Container>
   );
 };

@@ -84,14 +84,12 @@ const Goals = () => {
           goals: goals.goals,
         };
 
+        await AsyncStorage.setItem("userGoals", JSON.stringify(body));
+
         await api.post(`usuarios/${id}/health`, body);
-        navigation.navigate("Strategies", {
-          health: health.health,
-          mentalHealth: mentalHealth.mentalHealth,
-          substances,
-          substanceFrequencies,
-          goals: goals.goals,
-        });
+        navigation.navigate("Strategies");
+
+        console.log("Indo para strategies com: ", body);
       } catch (error) {
         console.log(error);
       }

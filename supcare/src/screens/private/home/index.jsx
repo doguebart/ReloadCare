@@ -12,7 +12,7 @@ import {
   Title,
   ScrollViewContainer,
 } from "./styles";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 import Icon from "react-native-vector-icons/EvilIcons";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
@@ -23,6 +23,7 @@ import bannerMetas from "../../../assets/bannerMetas.png";
 import Header from "../../../components/header";
 
 const Home = () => {
+  const route = useRoute();
   const navigation = useNavigation();
   const [activeSlide, setActiveSlide] = useState(0);
 
