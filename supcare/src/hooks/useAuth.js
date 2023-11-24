@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import api from "../api/api.js";
+import Toast from "react-native-toast-message";
 
 const useAuth = () => {
   const [user, setUser] = useState({});
@@ -27,13 +28,17 @@ const useAuth = () => {
             const response = await api.get(`usuarios/${userId}`);
             setUser(response.data);
           } catch (error) {
-            console.error("Error fetching user data:", error);
+            if (error) {
+              console.log("Erro ao buscar usuário");
+            }
           }
         } else {
           setIsLoading(false);
         }
       } catch (error) {
-        console.log(error);
+        if (error) {
+          console.log("Algo aconteceu, tente novamente mais tarde");
+        }
       }
     };
 
@@ -45,7 +50,9 @@ const useAuth = () => {
       const response = await api.get(`usuarios/${id}`);
       setUser(response.data);
     } catch (error) {
-      console.error("Error fetching updated user data:", error);
+      if (error) {
+        console.log("Erro ao buscar usuário");
+      }
     }
   };
 
@@ -57,7 +64,13 @@ const useAuth = () => {
 
       navigation.navigate("Login");
     } catch (error) {
-      console.log(error);
+      if (error) {
+        Toast.show({
+          type: "error",
+          text1: "Erro ao registrar",
+          text2: "Não foi possível se registrar, tente novamente mais tarde",
+        });
+      }
     }
   };
 
@@ -68,25 +81,16 @@ const useAuth = () => {
       });
       await authUser(data);
     } catch (error) {
-      console.log(error);
-      if (error.response.data.status === 403) {
-        console.log("Incorrect Username or Password!");
+      if (error) {
+        Toast.show({
+          type: "error",
+          text1: "Erro no login",
+          text2:
+            "Não foi possível realizar o login, tente novamente mais tarde",
+        });
       }
     }
   };
-
-  // const edit = async (user) => {
-  //   try {
-  //     const data = await api.put(`usuarios/${id}`, user).then((response) => {
-  //       return response.data;
-  //     });
-  //     await AsyncStorage.setItem("userId", JSON.stringify(data.id));
-  //     setIsAuthenticated(true);
-  //     navigation.navigate("Home");
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const del = async (userId) => {
     try {
@@ -98,7 +102,14 @@ const useAuth = () => {
       setIsAuthenticated(false);
       navigation.navigate("Register");
     } catch (error) {
-      console.log(error.response.data.message);
+      if (error) {
+        Toast.show({
+          type: "error",
+          text1: "Erro ao apagar a conta",
+          text2:
+            "Não foi possível apagar sua conta, tente novamente mais tarde",
+        });
+      }
     }
   };
 
@@ -110,10 +121,12 @@ const useAuth = () => {
         setIsAuthenticated(true);
         navigation.navigate("Home");
       } else {
-        console.log("Invalid data received for authentication");
+        console.log("Falha ao autenticar usuário");
       }
     } catch (error) {
-      console.log(error);
+      if (error) {
+        console.log("Algo aconteceu, tente novamente mais tarde");
+      }
     }
   };
 
