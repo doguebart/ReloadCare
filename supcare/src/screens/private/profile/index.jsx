@@ -12,6 +12,7 @@ import {
   Card,
   ButtonContainer,
 } from "./styles";
+import Toast from "react-native-toast-message";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Context } from "../../../context/UserContext.jsx";
 import api from "../../../api/api.js";
@@ -138,7 +139,14 @@ const Profile = () => {
           setUser(updatedUser);
           setEditMode(false);
         } catch (error) {
-          console.log("Error during update:", error);
+          if (error) {
+            Toast.show({
+              type: "error",
+              text1: "Erro na atualização de usuário",
+              text2:
+                "Não foi possível atualizar suas informações, tente novamente mais tarde",
+            });
+          }
         }
       } else {
         setEditMode(false);
