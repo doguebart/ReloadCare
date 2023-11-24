@@ -26,7 +26,7 @@ export const Card = styled.View`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0px 1px 1px #555
+  box-shadow: 0px 1px 1px #555;
 `;
 
 export const CarouselItem = styled.View`
@@ -104,6 +104,14 @@ export const ImageBannerContainer = styled.View`
   padding: 10px;
   border-radius: 10px;
   margin: 0 auto;
+`;
+
+export const IconAreaContainer = styled.View`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const ImageBanner = styled.Image`

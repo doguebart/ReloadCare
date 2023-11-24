@@ -17,7 +17,8 @@ import { Alert } from "react-native";
 
 const Header = () => {
   const navigation = useNavigation();
-  const { user, updateUser, logout } = useContext(Context);
+  const { logout } = useContext(Context);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,7 +34,14 @@ const Header = () => {
               },
             })
             .then((response) => {
-              updateUser(response.data);
+              setUser(response.data);
+              setFormData({
+                nome: response.data.nome,
+                idade: response.data.age,
+                email: response.data.email,
+                senha: response.data.senha,
+                cf_senha: "",
+              });
             })
             .catch((error) => {
               console.error("Error fetching user data:", error);
@@ -46,10 +54,6 @@ const Header = () => {
 
     fetchData();
   }, []);
-
-  useEffect(() => {
-    updateUser();
-  }, [user]);
 
   const goToProfile = () => {
     navigation.navigate("Profile");
