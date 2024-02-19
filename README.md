@@ -3,12 +3,6 @@ O ReloadCare™ é um app criado para ajudar dependentes químicos, servindo de 
 
 O app registra informações preenchidas pelo usuário, por meio de um formulário, durante sua jornada para uma vida mais saudável (onde o médico também pode ter acesso, para acompanhar em tempor real) e o auxilia com sua interface amigável e intuitiva, oferecendo também um painel para o usuário do app receber dicas e orientações, visando melhorar suas condições físicas e mentais.
 
-## Vídeos
-### Vídeo de apresentação do app
-colocaraqui
-### Vídeo de realização do CRUD, retornando dados em nuvem
-colocaraqui
-
 ## Integrantes
 rm94265 | Daniel Ferreira dos Santos - 2TDST <br/>
 rm94269 | Douglas Welber - 2TDSS <br/>
